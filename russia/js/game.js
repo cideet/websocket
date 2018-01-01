@@ -138,6 +138,9 @@ var Game = function () {
             cur.down();
             setData();
             refreshDiv(gameData, gameDivs);
+            return true;
+        } else {
+            return false;
         }
     };
 
@@ -192,4 +195,7 @@ var Game = function () {
     this.left = left;
     this.right = right;
     this.rotate = rotate;
+    this.fall = function(){  //下降到底部
+        while(down());
+    }
 };
