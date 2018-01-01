@@ -161,6 +161,16 @@ var Game = function () {
         }
     };
 
+    // 旋转
+    var rotate = function () {
+        if (cur.canRotate(isValid)) {
+            clearData();
+            cur.rotate();
+            setData();
+            refreshDiv(gameData, gameDivs);
+        }
+    };
+
     // 初始化
     var init = function (doms) {
         gameDiv = doms.gameDiv;
@@ -181,4 +191,5 @@ var Game = function () {
     this.down = down;
     this.left = left;
     this.right = right;
+    this.rotate = rotate;
 };
