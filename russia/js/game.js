@@ -178,12 +178,12 @@ var Game = function () {
     var init = function (doms) {
         gameDiv = doms.gameDiv;
         nextDiv = doms.nextDiv;
-        cur = new Square();
-        next = new Square();
+        cur = SquareFactory.prototype.make(2, 2);
+        next = SquareFactory.prototype.make(3, 3);
         initDiv(gameDiv, gameData, gameDivs);
         initDiv(nextDiv, next.data, nextDivs);
-        cur.origin.x = 10;
-        cur.origin.y = 5;
+        // cur.origin.x = 10;
+        // cur.origin.y = 5;
         setData();
         refreshDiv(gameData, gameDivs);
         refreshDiv(next.data, nextDivs);
@@ -195,7 +195,7 @@ var Game = function () {
     this.left = left;
     this.right = right;
     this.rotate = rotate;
-    this.fall = function(){  //下降到底部
-        while(down());
+    this.fall = function () {  //下降到底部
+        while (down());
     }
 };
