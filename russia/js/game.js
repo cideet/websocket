@@ -77,6 +77,90 @@ var Game = function () {
         }
     };
 
+    // 检测点是否合法
+    var check = function (pos, x, y) {
+        if (pos.x + x < 0) {
+            return false;
+        } else if (pos.x + x >= gameData.length) {  //超出下边界
+            return false;
+        } else if (pos.y + y < 0) {  //超出左边界
+            return false;
+        } else if (pos.y + y >= gameData[0].length) {  //超出右边界
+            return false;
+        } else if (gameData[pos.x + x][pos.y + y] == 1) {  //有方块了
+            return false;
+        } else {
+            return true;
+        }
+    };
+
+    // 检测数据是否合法
+    var isValid = function (pos, data) {
+        for (var i = 0; i < data.length; i++) {
+            for (var j = 0; j < data[0].length; j++) {
+                if (data[i][j] != 0) {
+                    if (!check(pos, i, j)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    };
+
+    // 清除数据
+    var clearData = function () {
+        for (var i = 0; i < cur.data.length; i++) {
+            for (var j = 0; j < cur.data[0].length; j++) {
+                if (check(cur.origin, i, j)) {
+                    gameData[cur.origin.x + i][cur.origin.y + j] = 0;
+                }
+            }
+        }
+    };
+
+    // 设置数据
+    var setData = function () {
+        for (var i = 0; i < cur.data.length; i++) {
+            for (var j = 0; j < cur.data[0].length; j++) {
+                if (check(cur.origin, i, j)) {
+                    gameData[cur.origin.x + i][cur.origin.y + j] = cur.data[i][j];
+                }
+            }
+        }
+    };
+
+    // 下移
+    var down = function () {
+        if (cur.canDown(isValid)) {
+            clearData();
+            // cur.origin.x = cur.origin.x + 1;
+            cur.down();
+            setData();
+            refreshDiv(gameData, gameDivs);
+        }
+    };
+
+    // 左移
+    var left = function () {
+        if (cur.canLeft(isValid)) {
+            clearData();
+            cur.left();
+            setData();
+            refreshDiv(gameData, gameDivs);
+        }
+    };
+
+    // 右移
+    var right = function () {
+        if (cur.canRight(isValid)) {
+            clearData();
+            cur.right();
+            setData();
+            refreshDiv(gameData, gameDivs);
+        }
+    };
+
     // 初始化
     var init = function (doms) {
         gameDiv = doms.gameDiv;
@@ -87,15 +171,14 @@ var Game = function () {
         initDiv(nextDiv, next.data, nextDivs);
         cur.origin.x = 10;
         cur.origin.y = 5;
-        for (var i = 0; i < cur.data.length; i++) {
-            for (var j = 0; j < cur.data[0].length; j++) {
-                gameData[cur.origin.x + i][cur.origin.y + j] = cur.data[i][j];
-            }
-        }
+        setData();
         refreshDiv(gameData, gameDivs);
         refreshDiv(next.data, nextDivs);
     };
 
     // 导出API
     this.init = init;
+    this.down = down;
+    this.left = left;
+    this.right = right;
 };
