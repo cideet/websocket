@@ -8,6 +8,7 @@ var Local = function () {
     // 绑定键盘事件
     var bindKeyEvent = function () {
         document.onkeydown = function (e) {
+            console.log(e.keyCode);
             if (e.keyCode == 38) {  //up
                 game.rotate();
             } else if (e.keyCode == 39) {  //right
@@ -20,7 +21,7 @@ var Local = function () {
                 game.fall();
             }
         }
-    }
+    };
 
     // 开始
     var start = function () {
@@ -32,6 +33,6 @@ var Local = function () {
         game.init(doms);
         bindKeyEvent();
     };
-    // 导师出API
+    // 导出API
     this.start = start;
-}
+};
