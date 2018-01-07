@@ -30,7 +30,12 @@ var Local = function () {
         if (!game.down()) {
             game.fixed();  //固定
             game.checkClear();  //消行
-            game.performNext(generateType(), generateDir());  //下一个方块
+            var gameOver = game.checkGameOver();  //检查游戏结束
+            if (gameOver) {
+                stop();
+            } else {
+                game.performNext(generateType(), generateDir());  //下一个方块
+            }
         }
     };
 
@@ -40,7 +45,7 @@ var Local = function () {
     };
 
     // 随机生成一个旋转次数
-    var generateDir = function(){
+    var generateDir = function () {
         return Math.ceil(Math.random() * 4) - 1;  //0-3
     };
 
@@ -55,6 +60,16 @@ var Local = function () {
         bindKeyEvent();
         timer = setInterval(move, INTERVAL);
     };
+
+    // 结束
+    var stop = function () {
+        if (timer) {
+            clearInterval(timer);
+            timer = null;
+        }
+        document.onkeydown = null;
+    };
+
     // 导出API
     this.start = start;
 };

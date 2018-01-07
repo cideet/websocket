@@ -212,6 +212,17 @@ var Game = function () {
         }
     };
 
+    // 检查游戏结束
+    var checkGameOver = function () {
+        var gameOver = false;
+        for (var i = 0; i < gameData[0].length; i++) {
+            if (gameData[1][i] == 1) {
+                gameOver = true;
+            }
+        }
+        return gameOver;
+    };
+
     // 使用下一个方块
     var performNext = function (type, dir) {
         cur = next;
@@ -245,6 +256,7 @@ var Game = function () {
     this.fixed = fixed;
     this.performNext = performNext;
     this.checkClear = checkClear;
+    this.checkGameOver = checkGameOver;
     this.fall = function () {  //下降到底部
         while (down());
     }
