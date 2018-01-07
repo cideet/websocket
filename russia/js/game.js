@@ -6,6 +6,7 @@ var Game = function () {
     // dom元素
     var gameDiv;
     var nextDiv;
+    var timeDiv;
 
     // 游戏矩阵
     var gameData = [
@@ -232,10 +233,16 @@ var Game = function () {
         refreshDiv(next.data, nextDivs);
     };
 
+    // 设置时间
+    var setTime = function (time) {
+        timeDiv.innerHTML = time;
+    };
+
     // 初始化
     var init = function (doms, type, dir) {
         gameDiv = doms.gameDiv;
         nextDiv = doms.nextDiv;
+        timeDiv = doms.timeDiv;
         // cur = SquareFactory.prototype.make(2, 2);
         next = SquareFactory.prototype.make(type, dir);
         initDiv(gameDiv, gameData, gameDivs);
@@ -253,11 +260,13 @@ var Game = function () {
     this.left = left;
     this.right = right;
     this.rotate = rotate;
+    this.fall = function () {  //下降到底部
+        while (down());
+    };
     this.fixed = fixed;
     this.performNext = performNext;
     this.checkClear = checkClear;
     this.checkGameOver = checkGameOver;
-    this.fall = function () {  //下降到底部
-        while (down());
-    }
+    this.setTime = setTime;
+
 };

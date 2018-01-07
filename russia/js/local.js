@@ -6,6 +6,8 @@ var Local = function () {
     var game;  //游戏对象
     var INTERVAL = 200;  //时间间隔
     var timer = null;  //定时器
+    var timeCount = 0;  //时间计数器
+    var time = 0; //时间
 
     // 绑定键盘事件
     var bindKeyEvent = function () {
@@ -27,6 +29,7 @@ var Local = function () {
 
     // 移动
     var move = function () {
+        timeFunc();
         if (!game.down()) {
             game.fixed();  //固定
             game.checkClear();  //消行
@@ -36,6 +39,16 @@ var Local = function () {
             } else {
                 game.performNext(generateType(), generateDir());  //下一个方块
             }
+        }
+    };
+
+    // 计时函数
+    var timeFunc = function () {
+        timeCount = timeCount + 1;
+        if (timeCount == 5) {
+            timeCount = 0;
+            time = time + 1;
+            game.setTime(time);
         }
     };
 
@@ -53,7 +66,8 @@ var Local = function () {
     var start = function () {
         var doms = {
             gameDiv: document.getElementById('game'),
-            nextDiv: document.getElementById('next')
+            nextDiv: document.getElementById('next'),
+            timeDiv: document.getElementById('time')
         };
         game = new Game();
         game.init(doms, generateType(), generateDir());
