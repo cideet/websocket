@@ -3,7 +3,9 @@
  */
 
 var Local = function () {
-    var game; // 游戏对象
+    var game;  //游戏对象
+    var INTERVAL = 200;  //时间间隔
+    var timer = null;  //定时器
 
     // 绑定键盘事件
     var bindKeyEvent = function () {
@@ -23,6 +25,13 @@ var Local = function () {
         }
     };
 
+    // 移动
+    var move = function () {
+        if (!game.down()) {
+            game.fixed();
+        }
+    };
+
     // 开始
     var start = function () {
         var doms = {
@@ -32,6 +41,7 @@ var Local = function () {
         game = new Game();
         game.init(doms);
         bindKeyEvent();
+        timer = setInterval(move, INTERVAL);
     };
     // 导出API
     this.start = start;

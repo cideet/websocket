@@ -174,6 +174,20 @@ var Game = function () {
         }
     };
 
+    // 方法移动到底部后，固定位置
+    var fixed = function () {
+        for (var i = 0; i < cur.data.length; i++) {
+            for (var j = 0; j < cur.data[0].length; j++) {
+                if (check(cur.origin, i, j)) {
+                    if (gameData[cur.origin.x + i][cur.origin.y + j] == 2) {
+                        gameData[cur.origin.x + i][cur.origin.y + j] = 1;
+                    }
+                }
+            }
+        }
+        refreshDiv(gameData, gameDivs);
+    };
+
     // 初始化
     var init = function (doms) {
         gameDiv = doms.gameDiv;
@@ -195,6 +209,7 @@ var Game = function () {
     this.left = left;
     this.right = right;
     this.rotate = rotate;
+    this.fixed = fixed;
     this.fall = function () {  //下降到底部
         while (down());
     }
