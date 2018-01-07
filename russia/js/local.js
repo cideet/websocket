@@ -32,9 +32,13 @@ var Local = function () {
         timeFunc();
         if (!game.down()) {
             game.fixed();  //固定
-            game.checkClear();  //消行
+            var line = game.checkClear();  //消行
+            if (line) {
+                game.addScore(line);
+            }
             var gameOver = game.checkGameOver();  //检查游戏结束
             if (gameOver) {
+                game.gameover(false);
                 stop();
             } else {
                 game.performNext(generateType(), generateDir());  //下一个方块
@@ -67,7 +71,9 @@ var Local = function () {
         var doms = {
             gameDiv: document.getElementById('game'),
             nextDiv: document.getElementById('next'),
-            timeDiv: document.getElementById('time')
+            timeDiv: document.getElementById('time'),
+            scoreDiv: document.getElementById('score'),
+            resultDiv: document.getElementById('gameover')
         };
         game = new Game();
         game.init(doms, generateType(), generateDir());
