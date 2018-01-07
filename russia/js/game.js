@@ -233,17 +233,17 @@ var Game = function () {
     };
 
     // 初始化
-    var init = function (doms) {
+    var init = function (doms, type, dir) {
         gameDiv = doms.gameDiv;
         nextDiv = doms.nextDiv;
-        cur = SquareFactory.prototype.make(2, 2);
-        next = SquareFactory.prototype.make(3, 3);
+        // cur = SquareFactory.prototype.make(2, 2);
+        next = SquareFactory.prototype.make(type, dir);
         initDiv(gameDiv, gameData, gameDivs);
         initDiv(nextDiv, next.data, nextDivs);
         // cur.origin.x = 10;
         // cur.origin.y = 5;
-        setData();
-        refreshDiv(gameData, gameDivs);
+        // setData();
+        // refreshDiv(gameData, gameDivs);
         refreshDiv(next.data, nextDivs);
     };
 
