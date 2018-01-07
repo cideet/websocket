@@ -28,8 +28,9 @@ var Local = function () {
     // 移动
     var move = function () {
         if (!game.down()) {
-            game.fixed();
-            game.performNext(generateType(), generateDir());
+            game.fixed();  //固定
+            game.checkClear();  //消行
+            game.performNext(generateType(), generateDir());  //下一个方块
         }
     };
 

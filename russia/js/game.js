@@ -188,6 +188,30 @@ var Game = function () {
         refreshDiv(gameData, gameDivs);
     };
 
+    // 消行
+    var checkClear = function () {
+        for (var i = gameData.length - 1; i >= 0; i--) {
+            var clear = true;
+            for (var j = 0; j < gameData[0].length; j++) {
+                if (gameData[i][j] != 1) {
+                    clear = false;
+                    break;
+                }
+            }
+            if (clear) {
+                for (var m = i; m > 0; m--) {
+                    for (var n = 0; n < gameData[0].length; n++) {
+                        gameData[m][n] = gameData[m - 1][n];
+                    }
+                }
+                for (var n = 0; n < gameData[0].length; n++) {
+                    gameData[0][n] = 0;
+                }
+                i++;
+            }
+        }
+    };
+
     // 使用下一个方块
     var performNext = function (type, dir) {
         cur = next;
@@ -220,6 +244,7 @@ var Game = function () {
     this.rotate = rotate;
     this.fixed = fixed;
     this.performNext = performNext;
+    this.checkClear = checkClear;
     this.fall = function () {  //下降到底部
         while (down());
     }
