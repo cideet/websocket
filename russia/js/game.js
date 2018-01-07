@@ -188,6 +188,15 @@ var Game = function () {
         refreshDiv(gameData, gameDivs);
     };
 
+    // 使用下一个方块
+    var performNext = function (type, dir) {
+        cur = next;
+        setData();
+        next = SquareFactory.prototype.make(type, dir);
+        refreshDiv(gameData, gameDivs);
+        refreshDiv(next.data, nextDivs);
+    };
+
     // 初始化
     var init = function (doms) {
         gameDiv = doms.gameDiv;
@@ -210,6 +219,7 @@ var Game = function () {
     this.right = right;
     this.rotate = rotate;
     this.fixed = fixed;
+    this.performNext = performNext;
     this.fall = function () {  //下降到底部
         while (down());
     }
