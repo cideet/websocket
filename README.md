@@ -9,3 +9,6 @@ https://www.cnblogs.com/LXJ416/p/5629038.html <br>
 
 细说websocket PHP篇 <br>
 https://www.cnblogs.com/hustskyking/p/websocket-with-php.html <br>
+
+demo1 <br>
+试用websocket官方的服务器 <br>
