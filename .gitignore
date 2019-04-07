@@ -2,3 +2,4 @@
 demo2/node_modules/
 demo3/node_modules/
 workerman/my_chat/runtime
+workerman/my_chat/vendor/gatewayworker/vendor/workerman/workerman.log

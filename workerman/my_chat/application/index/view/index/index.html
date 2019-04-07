@@ -14,16 +14,44 @@
 <h5>index.html</h5>
 <input class="input" placeholder="你想说啥"/>
 <button class="btn">发送信息</button>
+<div id="div"></div>
+<!--<div style="font-size:20px;color:red;">张三丰进入</div>-->
+<!--<div style="font-size:25px;color:blue;">张三丰说：123</div>-->
+<!--<div style="font-size:30px;color:#333;">张三丰退出</div>-->
 
 <script>
+    var messages = [];
+    var htmls = '';
+    var meId = '';
     var ws = new WebSocket('ws://127.0.0.1:8282');
     ws.onmessage = function (e) {
-        console.log(e);
+        var obj = JSON.parse(e.data);
+        meId = obj.id;
+        console.log(obj);
+        switch (obj.type) {
+            case 'login':
+                console.log('login');
+                    htmls += '<div style="font-size:20px;color:red;">' + obj["data"] + '</div>';
+                break;
+            case 'msg':
+                console.log('msg');
+                htmls += '<div style="font-size:25px;color:blue;">' + obj["id"] + '说：' + obj["data"] + '</div>';
+                break;
+            case 'quit':
+                console.log('quit');
+                htmls += '<div style="font-size:30px;color:#333;">' + obj["data"] + '</div>';
+                break;
+        }
+        $('#div').append(htmls);
     };
-    //
+
     $('.btn').click(function () {
         var msg = $('.input').val();
-        ws.send(msg);
+        var obj = {
+            data: msg,
+            type: 'say'
+        };
+        ws.send(JSON.stringify(obj));
         $('.input').val('');
     })
 
