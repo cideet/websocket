@@ -8,8 +8,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport"
           content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <script src="__STATIC__/js/jquery.js"></script>
 </head>
 <body>
 <h5>index.html</h5>
+<input class="input" placeholder="你想说啥"/>
+<button class="btn">发送信息</button>
+
+<script>
+    var ws = new WebSocket('ws://127.0.0.1:8282');
+    ws.onmessage = function (e) {
+        console.log(e);
+    };
+    //
+    $('.btn').click(function () {
+        var msg = $('.input').val();
+        ws.send(msg);
+        $('.input').val('');
+    })
+
+</script>
 </body>
 </html>
