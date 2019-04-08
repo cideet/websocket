@@ -31,15 +31,15 @@
         switch (obj.type) {
             case 'login':
                 console.log('login');
-                    htmls += '<div style="font-size:20px;color:red;">' + obj["data"] + '</div>';
+                htmls = '<div style="font-size:20px;color:red;">' + obj["data"] + '</div>';
                 break;
             case 'msg':
                 console.log('msg');
-                htmls += '<div style="font-size:25px;color:blue;">' + obj["id"] + '说：' + obj["data"] + '</div>';
+                htmls = '<div style="font-size:25px;color:blue;">' + obj["id"] + '说：' + obj["data"] + '</div>';
                 break;
             case 'quit':
                 console.log('quit');
-                htmls += '<div style="font-size:30px;color:#333;">' + obj["data"] + '</div>';
+                htmls = '<div style="font-size:30px;color:#333;">' + obj["data"] + '</div>';
                 break;
         }
         $('#div').append(htmls);
