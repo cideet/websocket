@@ -3,6 +3,7 @@ http://doc3.workerman.net/640361 <br>
 
 workerman实战之PHP在线客服 <br>
 https://www.bilibili.com/video/av47313870/ <br>
+https://ke.qq.com/course/317080 <br>
 
 
 
