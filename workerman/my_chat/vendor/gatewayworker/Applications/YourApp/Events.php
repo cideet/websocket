@@ -41,10 +41,21 @@ class Events
 //        // 向所有人发送
 //        Gateway::sendToAll("$client_id login\r\n");
 
-        global $num;
-        $data = ['type' => 'welcome', 'id' => $client_id, 'data' => 'Hello' . $client_id];
-        Gateway::sendToClient($client_id, json_encode($data));
-        $data2 = ['type' => 'login', 'id' => $client_id, 'data' => $client_id . '进入'];
+//        global $num;
+//        $data = ['type' => 'welcome', 'id' => $client_id, 'data' => 'Hello' . $client_id];
+//        Gateway::sendToClient($client_id, json_encode($data));
+//        $data2 = ['type' => 'login', 'id' => $client_id, 'data' => $client_id . '进入'];
+//        Gateway::sendToAll(json_encode($data2));
+
+        Gateway::sendToClient($client_id, json_encode([
+            'type' => 'init',
+            'id' => $client_id
+        ]));
+        $data2 = [
+            'type' => 'login',
+            'id' => $client_id,
+            'data' => $client_id . '进入'
+        ];
         Gateway::sendToAll(json_encode($data2));
     }
 
@@ -63,6 +74,9 @@ class Events
             case 'say':
                 $data = ['type' => 'msg', 'id' => $client_id, 'data' => $mData['data']];
                 Gateway::sendToAll(json_encode($data));
+                break;
+            case 'bind':
+                Gateway::bindUid($client_id, $mData['fromid']);
                 break;
         }
     }

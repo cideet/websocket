@@ -9,9 +9,9 @@
     <meta name="viewport"
           content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
     <script src="__STATIC__/js/jquery.js"></script>
+    <script src="__STATIC__/js/util.js"></script>
 </head>
 <body>
-
 
 <div class="box">
     <div class="left">
@@ -27,6 +27,8 @@
 </div>
 
 <script>
+    var fromid = getRequest()['fromid'];
+    console.log(getRequest());
     var messages = [];
     var members = [];
     var htmls = '';
@@ -37,6 +39,14 @@
         messages.push(obj);
         console.log(messages);
         switch (obj.type) {
+            case 'init':
+                console.log('init没有写好，还需完善');
+                // var name = prompt("请输入你的名字（模拟获取userID）", 'user' + mathRandom(10000000, 99999999));
+                 var name = 'user' + mathRandom(10000000, 99999999);
+                if (name) {
+                    ws.send({type: 'bind', fromid: name});
+                }
+                break;
             case 'login':
                 console.log('login');
                 members.push(obj.id);
