@@ -11,27 +11,37 @@
     <script src="__STATIC__/js/jquery.js"></script>
 </head>
 <body>
-<h5>index.html</h5>
-<input class="input" placeholder="你想说啥"/>
-<button class="btn">发送信息</button>
-<div id="div"></div>
-<!--<div style="font-size:20px;color:red;">张三丰进入</div>-->
-<!--<div style="font-size:25px;color:blue;">张三丰说：123</div>-->
-<!--<div style="font-size:30px;color:#333;">张三丰退出</div>-->
+
+
+<div class="box">
+    <div class="left">
+        <h5>index.html</h5>
+        <input class="input" placeholder="你想说啥"/>
+        <button class="btn">发送信息</button>
+        <div id="div"></div>
+    </div>
+    <div class="right">
+        <h2>最后加入的用户</h2>
+        <div id="members"></div>
+    </div>
+</div>
 
 <script>
     var messages = [];
+    var members = [];
     var htmls = '';
     var meId = '';
     var ws = new WebSocket('ws://127.0.0.1:8282');
     ws.onmessage = function (e) {
         var obj = JSON.parse(e.data);
-        meId = obj.id;
-        console.log(obj);
+        messages.push(obj);
+        console.log(messages);
         switch (obj.type) {
             case 'login':
                 console.log('login');
-                htmls = '<div style="font-size:20px;color:red;">' + obj["data"] + '</div>';
+                members.push(obj.id);
+                htmls = '<div style="font-size:20px;color:orange;">' + obj["data"] + '</div>';
+                $('#members').append('<div style="height:40px;line-height:40px">' + obj.id + '</div>')
                 break;
             case 'msg':
                 console.log('msg');
@@ -41,8 +51,11 @@
                 console.log('quit');
                 htmls = '<div style="font-size:30px;color:#333;">' + obj["data"] + '</div>';
                 break;
+            case 'welcome':
+                htmls = '<div style="font-size:40px;color:red;">' + obj["data"] + '</div>'
         }
         $('#div').append(htmls);
+        console.log(members);
     };
 
     $('.btn').click(function () {
@@ -56,5 +69,35 @@
     })
 
 </script>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body, html {
+        width: 100%;
+        height: 100%;
+    }
+
+    .box {
+        padding: 30px;
+        width: 100%;
+        height: 100%;
+        display: flex;
+    }
+
+    .box .left {
+        flex: 1;
+        border-right: 1px solid #ccc;
+    }
+
+    .box .right {
+        width: 40%;
+        padding-left: 30px;
+    }
+</style>
 </body>
 </html>

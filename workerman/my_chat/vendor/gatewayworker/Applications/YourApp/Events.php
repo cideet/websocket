@@ -42,7 +42,7 @@ class Events
 //        Gateway::sendToAll("$client_id login\r\n");
 
         global $num;
-        $data = ['type' => 'login', 'id' => $client_id, 'data' => 'Hello' . $client_id];
+        $data = ['type' => 'welcome', 'id' => $client_id, 'data' => 'Hello' . $client_id];
         Gateway::sendToClient($client_id, json_encode($data));
         $data2 = ['type' => 'login', 'id' => $client_id, 'data' => $client_id . '进入'];
         Gateway::sendToAll(json_encode($data2));
