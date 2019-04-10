@@ -51,12 +51,11 @@ class Events
             'type' => 'init',
             'id' => $client_id
         ]));
-        $data2 = [
+        Gateway::sendToAll(json_encode([
             'type' => 'login',
             'id' => $client_id,
             'data' => $client_id . '进入'
-        ];
-        Gateway::sendToAll(json_encode($data2));
+        ]));
     }
 
     /**
@@ -72,8 +71,11 @@ class Events
         }
         switch ($mData['type']) {
             case 'say':
-                $data = ['type' => 'msg', 'id' => $client_id, 'data' => $mData['data']];
-                Gateway::sendToAll(json_encode($data));
+                Gateway::sendToAll(json_encode([
+                    'type' => 'msg',
+                    'id' => $client_id,
+                    'data' => $mData['data']
+                ]));
                 break;
             case 'bind':
                 Gateway::bindUid($client_id, $mData['fromid']);
@@ -89,7 +91,10 @@ class Events
     {
         // 向所有人发送
         // GateWay::sendToAll("$client_id logout\r\n");
-        $data = ['type' => 'quit', 'id' => $client_id, 'data' => $client_id . 'quit'];
-        Gateway::sendToAll(json_encode($data));
+        Gateway::sendToAll(json_encode([
+            'type' => 'quit',
+            'id' => $client_id,
+            'data' => $client_id . 'quit'
+        ]));
     }
 }
