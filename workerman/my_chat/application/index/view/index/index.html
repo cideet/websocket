@@ -27,55 +27,51 @@
 </div>
 
 <script>
-    var myname = '<{$username}>';
-    console.log('<{$username}>');
+    //    var fromid = '<{$fromid}>';
+    //    var toid = '<{$toid}>';
     var fromid = getRequest()['fromid'];
-    console.log(getRequest());
+    var toid = getRequest()['toid'];
+    console.log('fromid=' + fromid, 'toid=' + toid);
     var messages = [];
     var members = [];
     var htmls = '';
-    var meId = '';
     var ws = new WebSocket('ws://127.0.0.1:8282');
     ws.onmessage = function (e) {
         var obj = JSON.parse(e.data);
         messages.push(obj);
-        console.log(messages);
+        console.log('总的消息数组', messages);
         switch (obj.type) {
             case 'init':
-                console.log('init没有写好，还需完善');
-                // var name = prompt("请输入你的名字（模拟获取userID）", 'user' + mathRandom(10000000, 99999999));
-                if (myname) {
-                    ws.send({type: 'bind', fromid: myname});
-                }
+                console.log('switch==init');
+                ws.send(JSON.stringify({type: 'bind', fromid: fromid}));
                 break;
             case 'login':
-                console.log('login');
-                members.push(obj.id);
+                console.log('switch==login');
+                // members.push(obj.id);
                 htmls = '<div style="font-size:20px;color:orange;">' + obj["data"] + '</div>';
                 $('#members').append('<div style="height:40px;line-height:40px">' + obj.id + '</div>')
                 break;
             case 'msg':
-                console.log('msg');
-                htmls = '<div style="font-size:25px;color:blue;">' + obj["id"] + '说：' + obj["data"] + '</div>';
+                console.log('switch==msg');
+                htmls = '<div style="font-size:22px;color:blue;">' + obj["id"] + '说：' + obj["data"] + '</div>';
                 break;
             case 'quit':
-                console.log('quit');
-                htmls = '<div style="font-size:30px;color:#333;">' + obj["data"] + '</div>';
+                console.log('switch==quit');
+                htmls = '<div style="font-size:20px;color:#333;">' + obj["data"] + '</div>';
                 break;
-            case 'welcome':
-                htmls = '<div style="font-size:40px;color:red;">' + obj["data"] + '</div>'
         }
         $('#div').append(htmls);
-        console.log(members);
+        // console.log(members);
     };
 
     $('.btn').click(function () {
         var msg = $('.input').val();
-        var obj = {
+        ws.send(JSON.stringify({
             data: msg,
-            type: 'say'
-        };
-        ws.send(JSON.stringify(obj));
+            type: 'say',
+            to: toid ? toid : 'all',
+            from: fromid
+        }));
         $('.input').val('');
     })
 

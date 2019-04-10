@@ -6,7 +6,8 @@ class Index extends \think\Controller
 {
     public function index()
     {
-        $this->assign('username', 'user'.rand());
+        $this->assign('fromid', input('fromid'));
+        $this->assign('toid', input('toid'));
         return $this->fetch();
     }
 }
