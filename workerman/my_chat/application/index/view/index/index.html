@@ -27,6 +27,8 @@
 </div>
 
 <script>
+    var myname = '<{$username}>';
+    console.log('<{$username}>');
     var fromid = getRequest()['fromid'];
     console.log(getRequest());
     var messages = [];
@@ -42,9 +44,8 @@
             case 'init':
                 console.log('init没有写好，还需完善');
                 // var name = prompt("请输入你的名字（模拟获取userID）", 'user' + mathRandom(10000000, 99999999));
-                 var name = 'user' + mathRandom(10000000, 99999999);
-                if (name) {
-                    ws.send({type: 'bind', fromid: name});
+                if (myname) {
+                    ws.send({type: 'bind', fromid: myname});
                 }
                 break;
             case 'login':
