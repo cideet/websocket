@@ -46,7 +46,9 @@
     </div>
     <div class="right">
         <h2>最新加入的用户</h2>
-        <div id="members" class="members">
+        <div class="members">
+            <div id="members"></div>
+            <div onclick="selectMember('all')">对所有说</div>
             <!--<div onclick="selectMember(id)"><img-->
             <!--src="https://zhangsf1919.oss-cn-beijing.aliyuncs.com/uploads/6b3c7155d8bc10caf52b0dfda810692d.jpg"/><span>刘德华</span>-->
             <!--</div>-->
@@ -96,7 +98,6 @@
                     console.log('switch==login');
                     var oHtml = '<div class="message"><div class="pull-left"><div class="msg-left"><img class="headpic" src="' + obj.image + '"/></div><div class="msg-right ml-12">' + obj.nickname + '进入</div></div></div>';
                     $('#div').prepend(oHtml);
-//                    var oHtm = '<div><img src="' + obj.image + '"/><span>' + obj.nickname + '</span> </div>'
                     var oHtm = '<div onclick="selectMember(' + obj.fromid + ')"><img src="' + obj.image + '"/><span>' + obj.nickname + '</span></div>';
                     $('#members').prepend(oHtm);
                     break;
