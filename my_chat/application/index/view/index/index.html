@@ -65,6 +65,7 @@
     var toid = undefined;
     var toInfo = {};
     var messages = [];
+    var membersIds = [];
     var members = [];
     $(function () {
         getFromInfo(function () {
@@ -85,14 +86,19 @@
             switch (obj.type) {
                 case 'init':
                     console.log('switch==init');
-                    obj = {
+                    o = {
                         type: 'bind',
                         fromid: fromInfo.id,
                         nickname: fromInfo.nickname,
                         image: fromInfo.image
                     };
-                    console.log(obj);
-                    ws.send(JSON.stringify(obj));
+                    console.log(o);
+                    ws.send(JSON.stringify(o));
+                    console.log(obj.allUid);
+                    for (var i in obj.allUid) {
+                        membersIds.push(obj.allUid[i]);
+                    }
+                    console.log(membersIds);
                     break;
                 case 'login':
                     console.log('switch==login');
@@ -165,14 +171,13 @@
     }
 
     function getToInfo(callback) {
-        console.log(toid);
         if (toid) {
             getInfoByUid(toid, function (obj) {
                 if (obj.id) {
                     toid = obj.id;
                     toInfo = obj;
                     console.log(toInfo);
-                    $('#to-txt').html('对'+toInfo.nickname+'说：')
+                    $('#to-txt').html('对' + toInfo.nickname + '说：')
                 } else {
                     toid = 'all';
                     console.log('toid=' + toid);

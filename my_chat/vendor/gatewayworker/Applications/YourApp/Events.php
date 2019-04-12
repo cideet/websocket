@@ -49,7 +49,8 @@ class Events
 
         Gateway::sendToClient($client_id, json_encode([
             'type' => 'init',
-            'id' => $client_id
+            'id' => $client_id,
+            'allUid' => Gateway::getAllUidList()
         ]));
 
     }
