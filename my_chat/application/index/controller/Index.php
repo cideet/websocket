@@ -10,4 +10,6 @@ class Index extends \think\Controller
         $this->assign('toid', input('toid'));
         return $this->fetch();
     }
+
+
 }
