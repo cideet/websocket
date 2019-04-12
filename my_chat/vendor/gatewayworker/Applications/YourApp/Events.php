@@ -77,8 +77,8 @@ class Events
                 Gateway::bindUid($client_id, $mData['fromid']);
                 Gateway::sendToAll(json_encode([
                     'type' => 'login',
-                    'id' => $client_id,
-                    'data' => Gateway::getUidByClientId($client_id) . '进入'
+                    'image' => $mData['image'],
+                    'nickname' => $mData['nickname']
                 ]));
                 break;
         }

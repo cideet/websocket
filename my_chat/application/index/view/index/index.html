@@ -19,48 +19,37 @@
         <input class="input" placeholder="你想说啥"/>
         <button class="btn" onclick="sendMess()">发送信息</button>
         <div id="div">
-            <!--
+
             <div class="message">
                 <div class="pull-left">
-                    <img class="headpic"
-                         src="https://zhangsf1919.oss-cn-beijing.aliyuncs.com/uploads/6b3c7155d8bc10caf52b0dfda810692d.jpg"/>
-                    <span>张三丰进入</span>
+                    <div class="msg-left"><img class="headpic"
+                                               src="https://zhangsf1919.oss-cn-beijing.aliyuncs.com/uploads/6b3c7155d8bc10caf52b0dfda810692d.jpg"/>
+                    </div>
+                    <div class="msg-right ml-12">
+                        张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入张三丰进入
+                    </div>
                 </div>
             </div>
-            <div class="message">
-                <div class="pull-left">
-                    <img class="headpic"
-                         src="https://zhangsf1919.oss-cn-beijing.aliyuncs.com/uploads/6b3c7155d8bc10caf52b0dfda810692d.jpg"/>
-                    <span>张三丰说：123</span>
-                </div>
-            </div>
-            <div class="message">
-                <div class="pull-left">
-                    <img class="headpic"
-                         src="https://zhangsf1919.oss-cn-beijing.aliyuncs.com/uploads/6b3c7155d8bc10caf52b0dfda810692d.jpg"/>
-                    <span>张三丰对张四丰说：123</span>
-                </div>
-            </div>
+
             <div class="message">
                 <div class="pull-right">
-                    <span>我说：123</span>
-                    <img class="headpic"
-                         src="https://zhangsf1919.oss-cn-beijing.aliyuncs.com/uploads/6b3c7155d8bc10caf52b0dfda810692d.jpg"/>
+                    <div class="msg-right">
+                        <div style="text-align:left;">张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三张三丰进入张三丰进入张三</div>
+                    </div>
+                    <div class="msg-left ml-12"><img class="headpic"
+                                                     src="https://zhangsf1919.oss-cn-beijing.aliyuncs.com/uploads/6b3c7155d8bc10caf52b0dfda810692d.jpg"/>
+                    </div>
                 </div>
             </div>
-            <div class="message">
-                <div class="pull-right">
-                    <span>我对刘德华说：123</span>
-                    <img class="headpic"
-                         src="https://zhangsf1919.oss-cn-beijing.aliyuncs.com/uploads/6b3c7155d8bc10caf52b0dfda810692d.jpg"/>
-                </div>
-            </div>
-            -->
         </div>
     </div>
     <div class="right">
         <h2>最新加入的用户</h2>
-        <div id="members"></div>
+        <div id="members" class="members">
+            <!--<div><img-->
+            <!--src="https://zhangsf1919.oss-cn-beijing.aliyuncs.com/uploads/6b3c7155d8bc10caf52b0dfda810692d.jpg"/><span>刘德华</span>-->
+            <!--</div>-->
+        </div>
     </div>
 </div>
 
@@ -74,11 +63,10 @@
     var toInfo = {};
     var messages = [];
     var members = [];
-    var htmls = '';
     $(function () {
         getFromInfo(function () {
             getToInfo(function () {
-                socketMethod();
+//                socketMethod();
             })
         });
     });
@@ -87,31 +75,37 @@
         ws = new WebSocket(socketUrl);
         ws.onmessage = function (e) {
             var obj = JSON.parse(e.data);
+            console.log(obj);
             messages.push(obj);
             console.log('总的消息数组', messages);
             switch (obj.type) {
                 case 'init':
                     console.log('switch==init');
-                    ws.send(JSON.stringify({
+                    obj = {
                         type: 'bind',
-                        fromid: fromid
-                    }));
+                        fromid: fromInfo.id,
+                        nickname: fromInfo.nickname,
+                        image: fromInfo.image
+                    };
+                    console.log(obj);
+                    ws.send(JSON.stringify(obj));
                     break;
                 case 'login':
                     console.log('switch==login');
-                    htmls = '<div style="font-size:20px;color:orange;">' + obj["data"] + '</div>';
-                    $('#members').append('<div style="height:40px;line-height:40px">' + obj.id + '</div>');
+                    var oHtml = '<div class="message"><div class="pull-left"><img class="headpic" src="' + obj.image + '"/><span>' + obj.nickname + '进入</span></div></div>';
+                    $('#div').append(oHtml);
+                    var oHtm = '<div><img src="' + obj.image + '"/><span>' + obj.nickname + '</span> </div>'
+                    $('#members').append(oHtm);
                     break;
                 case 'msg':
                     console.log('switch==msg');
-                    htmls = '<div style="font-size:22px;color:blue;">' + obj["id"] + '说：' + obj["data"] + '</div>';
+                    var htmls = '<div style="font-size:22px;color:blue;">' + obj["id"] + '说：' + obj["data"] + '</div>';
                     break;
                 case 'quit':
                     console.log('switch==quit');
-                    htmls = '<div style="font-size:20px;color:#333;">' + obj["data"] + '</div>';
+                    var htmls = '<div style="font-size:20px;color:#333;">' + obj["data"] + '</div>';
                     break;
             }
-            $('#div').append(htmls);
         };
     }
 
@@ -210,6 +204,32 @@
         padding-left: 30px;
     }
 
+    .box .right h2 {
+        margin-bottom: 12px;
+    }
+
+    .box .right .members div {
+        margin-bottom: 12px;
+    }
+
+    .box .right div {
+        height: 30px;
+        line-height: 30px;
+    }
+
+    .box .right img {
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+        float: left;
+    }
+
+    .box .right div span {
+        display: inline-block;
+        float: left;
+        margin-left: 20px;
+    }
+
     .message {
         width: 100%;
         height: auto;
@@ -219,15 +239,38 @@
 
     .message .pull-left {
         float: left;
+        width: 80%;
+        display: flex;
+    }
+
+    .message .msg-right {
+        display: flex;
+        align-items: center;
     }
 
     .message .pull-right {
         float: right;
+        max-width: 80%;
+        display: flex;
+        text-align: right;
+    }
+
+    .message .pull-right .message img, .message .pull-right .message span {
+        float: left;
+        text-align: right;
+    }
+
+    .message span {
+        line-height: 25px;
     }
 
     .message .headpic {
         width: 50px;
         height: 50px;
+    }
+
+    .ml-12 {
+        margin-left: 12px;
     }
 </style>
 </body>
