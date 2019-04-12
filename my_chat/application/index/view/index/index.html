@@ -17,7 +17,7 @@
     <div class="left">
         <h5>index.html</h5>
         <input class="input" placeholder="你想说啥"/>
-        <button class="btn">发送信息</button>
+        <button class="btn" onclick="sendMess()">发送信息</button>
         <div id="div">
             <!--
             <div class="message">
@@ -65,6 +65,9 @@
 </div>
 
 <script>
+    var socketUrl = 'ws://127.0.0.1:8282';
+    var apiPrefix = 'http://127.0.0.3/index.php/';
+    var ws;
     var fromid = undefined;
     var fromInfo = {};
     var toid = undefined;
@@ -73,6 +76,71 @@
     var members = [];
     var htmls = '';
     $(function () {
+        getFromInfo(function () {
+            getToInfo(function () {
+                socketMethod();
+            })
+        });
+    });
+
+    function socketMethod() {
+        ws = new WebSocket(socketUrl);
+        ws.onmessage = function (e) {
+            var obj = JSON.parse(e.data);
+            messages.push(obj);
+            console.log('总的消息数组', messages);
+            switch (obj.type) {
+                case 'init':
+                    console.log('switch==init');
+                    ws.send(JSON.stringify({
+                        type: 'bind',
+                        fromid: fromid
+                    }));
+                    break;
+                case 'login':
+                    console.log('switch==login');
+                    htmls = '<div style="font-size:20px;color:orange;">' + obj["data"] + '</div>';
+                    $('#members').append('<div style="height:40px;line-height:40px">' + obj.id + '</div>');
+                    break;
+                case 'msg':
+                    console.log('switch==msg');
+                    htmls = '<div style="font-size:22px;color:blue;">' + obj["id"] + '说：' + obj["data"] + '</div>';
+                    break;
+                case 'quit':
+                    console.log('switch==quit');
+                    htmls = '<div style="font-size:20px;color:#333;">' + obj["data"] + '</div>';
+                    break;
+            }
+            $('#div').append(htmls);
+        };
+    }
+
+    function sendMess() {
+        var msg = $('.input').val();
+        ws.send(JSON.stringify({
+            data: msg,
+            type: 'say',
+            to: toid ? toid : 'all',
+            from: fromid
+        }));
+        $('.input').val('');
+    }
+
+    function getInfoByUid(uid, callback) {
+        $.ajax({
+            url: apiPrefix + 'index/Api/getUserinfoByUid?uid=' + uid,
+            type: 'get',
+            success: function (res, status) {
+                if (res !== 'null') {
+                    callback && callback(JSON.parse(res))
+                } else {
+                    callback && callback({});
+                }
+            }
+        });
+    }
+
+    function getFromInfo(callback) {
         fromid = getRequest()['fromid'];
         if (fromid) {
             getInfoByUid(fromid, function (obj) {
@@ -80,6 +148,7 @@
                     fromid = obj.id;
                     fromInfo = obj;
                     console.log(fromInfo);
+                    callback && callback();
                 } else {
                     alert('用户不存在');
                 }
@@ -87,6 +156,9 @@
         } else {
             alert('模拟登录，所以链接必带?fromid=xxx')
         }
+    }
+
+    function getToInfo(callback) {
         toid = getRequest()['toid'];
         console.log(toid);
         if (toid) {
@@ -97,60 +169,14 @@
                     console.log(toInfo);
                 } else {
                     toid = 'all';
+                    console.log('toid=' + toid);
                 }
+                callback && callback();
             })
+        } else {
+            toid = 'all';
+            callback && callback();
         }
-    });
-    var ws = new WebSocket('ws://127.0.0.1:8282');
-    ws.onmessage = function (e) {
-        var obj = JSON.parse(e.data);
-        messages.push(obj);
-        console.log('总的消息数组', messages);
-        switch (obj.type) {
-            case 'init':
-                console.log('switch==init');
-                ws.send(JSON.stringify({type: 'bind', fromid: fromid}));
-                break;
-            case 'login':
-                console.log('switch==login');
-                htmls = '<div style="font-size:20px;color:orange;">' + obj["data"] + '</div>';
-                $('#members').append('<div style="height:40px;line-height:40px">' + obj.id + '</div>');
-                break;
-            case 'msg':
-                console.log('switch==msg');
-                htmls = '<div style="font-size:22px;color:blue;">' + obj["id"] + '说：' + obj["data"] + '</div>';
-                break;
-            case 'quit':
-                console.log('switch==quit');
-                htmls = '<div style="font-size:20px;color:#333;">' + obj["data"] + '</div>';
-                break;
-        }
-        $('#div').append(htmls);
-    };
-
-    $('.btn').click(function () {
-        var msg = $('.input').val();
-        ws.send(JSON.stringify({
-            data: msg,
-            type: 'say',
-            to: toid ? toid : 'all',
-            from: fromid
-        }));
-        $('.input').val('');
-    });
-
-    function getInfoByUid(uid, callback) {
-        $.ajax({
-            url: 'http://127.0.0.3/index.php/index/Api/getUserinfoByUid?uid=' + uid,
-            type: 'get',
-            success: function (res, status) {
-                if (res !== 'null') {
-                    callback && callback(JSON.parse(res))
-                } else {
-                    callback && callback({});
-                }
-            }
-        });
     }
 
 </script>
