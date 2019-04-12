@@ -66,20 +66,29 @@ class Events
             return;
         }
         switch ($mData['type']) {
-            case 'say':
-                Gateway::sendToAll(json_encode([
-                    'type' => 'msg',
-                    'id' => $client_id,
-                    'data' => $mData['data']
-                ]));
-                break;
             case 'bind':
                 Gateway::bindUid($client_id, $mData['fromid']);
                 Gateway::sendToAll(json_encode([
                     'type' => 'login',
                     'image' => $mData['image'],
-                    'nickname' => $mData['nickname']
+                    'nickname' => $mData['nickname'],
+                    'fromid' => $mData['fromid']
                 ]));
+                break;
+            case 'say':
+                $s = json_encode([
+                    'type' => 'say',
+                    'image' => $mData['image'],
+                    'nickname' => $mData['nickname'],
+                    'msg' => $mData['msg'],
+                    'fromid' => $mData['fromid'],
+                    'toid' => $mData['toid']
+                ]);
+                if ($mData['toid'] == 'all') {
+                    Gateway::sendToAll($s);
+                } else {
+                    Gateway::sendToUid($mData['toid'], $s);
+                }
                 break;
         }
     }
