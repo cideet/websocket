@@ -11,5 +11,10 @@ class Index extends \think\Controller
         return $this->fetch();
     }
 
+    public function chat()
+    {
+        return $this->fetch();
+    }
+
 
 }
