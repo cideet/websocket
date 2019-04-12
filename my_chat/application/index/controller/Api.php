@@ -7,6 +7,7 @@
  */
 
 namespace app\index\controller;
+
 use think\Controller;
 
 class Api extends Controller
@@ -15,5 +16,11 @@ class Api extends Controller
     {
         $cates = model('User')->getAllData();
         return json_encode($cates);
+    }
+
+    public function getUserinfoByUid($uid)
+    {
+        $info = model('User')->getInfoById($uid);
+        return json_encode($info);
     }
 }

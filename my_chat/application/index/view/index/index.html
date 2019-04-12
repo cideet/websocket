@@ -18,7 +18,45 @@
         <h5>index.html</h5>
         <input class="input" placeholder="你想说啥"/>
         <button class="btn">发送信息</button>
-        <div id="div"></div>
+        <div id="div">
+            <!--
+            <div class="message">
+                <div class="pull-left">
+                    <img class="headpic"
+                         src="https://zhangsf1919.oss-cn-beijing.aliyuncs.com/uploads/6b3c7155d8bc10caf52b0dfda810692d.jpg"/>
+                    <span>张三丰进入</span>
+                </div>
+            </div>
+            <div class="message">
+                <div class="pull-left">
+                    <img class="headpic"
+                         src="https://zhangsf1919.oss-cn-beijing.aliyuncs.com/uploads/6b3c7155d8bc10caf52b0dfda810692d.jpg"/>
+                    <span>张三丰说：123</span>
+                </div>
+            </div>
+            <div class="message">
+                <div class="pull-left">
+                    <img class="headpic"
+                         src="https://zhangsf1919.oss-cn-beijing.aliyuncs.com/uploads/6b3c7155d8bc10caf52b0dfda810692d.jpg"/>
+                    <span>张三丰对张四丰说：123</span>
+                </div>
+            </div>
+            <div class="message">
+                <div class="pull-right">
+                    <span>我说：123</span>
+                    <img class="headpic"
+                         src="https://zhangsf1919.oss-cn-beijing.aliyuncs.com/uploads/6b3c7155d8bc10caf52b0dfda810692d.jpg"/>
+                </div>
+            </div>
+            <div class="message">
+                <div class="pull-right">
+                    <span>我对刘德华说：123</span>
+                    <img class="headpic"
+                         src="https://zhangsf1919.oss-cn-beijing.aliyuncs.com/uploads/6b3c7155d8bc10caf52b0dfda810692d.jpg"/>
+                </div>
+            </div>
+            -->
+        </div>
     </div>
     <div class="right">
         <h2>最新加入的用户</h2>
@@ -27,14 +65,42 @@
 </div>
 
 <script>
-    //    var fromid = '<{$fromid}>';
-    //    var toid = '<{$toid}>';
-    var fromid = getRequest()['fromid'];
-    var toid = getRequest()['toid'];
-    console.log('fromid=' + fromid, 'toid=' + toid);
+    var fromid = undefined;
+    var fromInfo = {};
+    var toid = undefined;
+    var toInfo = {};
     var messages = [];
     var members = [];
     var htmls = '';
+    $(function () {
+        fromid = getRequest()['fromid'];
+        if (fromid) {
+            getInfoByUid(fromid, function (obj) {
+                if (obj.id) {
+                    fromid = obj.id;
+                    fromInfo = obj;
+                    console.log(fromInfo);
+                } else {
+                    alert('用户不存在');
+                }
+            })
+        } else {
+            alert('模拟登录，所以链接必带?fromid=xxx')
+        }
+        toid = getRequest()['toid'];
+        console.log(toid);
+        if (toid) {
+            getInfoByUid(toid, function (obj) {
+                if (obj.id) {
+                    toid = obj.id;
+                    toInfo = obj;
+                    console.log(toInfo);
+                } else {
+                    toid = 'all';
+                }
+            })
+        }
+    });
     var ws = new WebSocket('ws://127.0.0.1:8282');
     ws.onmessage = function (e) {
         var obj = JSON.parse(e.data);
@@ -47,9 +113,8 @@
                 break;
             case 'login':
                 console.log('switch==login');
-                // members.push(obj.id);
                 htmls = '<div style="font-size:20px;color:orange;">' + obj["data"] + '</div>';
-                $('#members').append('<div style="height:40px;line-height:40px">' + obj.id + '</div>')
+                $('#members').append('<div style="height:40px;line-height:40px">' + obj.id + '</div>');
                 break;
             case 'msg':
                 console.log('switch==msg');
@@ -61,7 +126,6 @@
                 break;
         }
         $('#div').append(htmls);
-        // console.log(members);
     };
 
     $('.btn').click(function () {
@@ -73,7 +137,21 @@
             from: fromid
         }));
         $('.input').val('');
-    })
+    });
+
+    function getInfoByUid(uid, callback) {
+        $.ajax({
+            url: 'http://127.0.0.3/index.php/index/Api/getUserinfoByUid?uid=' + uid,
+            type: 'get',
+            success: function (res, status) {
+                if (res !== 'null') {
+                    callback && callback(JSON.parse(res))
+                } else {
+                    callback && callback({});
+                }
+            }
+        });
+    }
 
 </script>
 
@@ -104,6 +182,26 @@
     .box .right {
         width: 40%;
         padding-left: 30px;
+    }
+
+    .message {
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        margin: 10px 0 10px 0;
+    }
+
+    .message .pull-left {
+        float: left;
+    }
+
+    .message .pull-right {
+        float: right;
+    }
+
+    .message .headpic {
+        width: 50px;
+        height: 50px;
     }
 </style>
 </body>

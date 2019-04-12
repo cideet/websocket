@@ -51,11 +51,7 @@ class Events
             'type' => 'init',
             'id' => $client_id
         ]));
-        Gateway::sendToAll(json_encode([
-            'type' => 'login',
-            'id' => $client_id,
-            'data' => $client_id . '进入'
-        ]));
+
     }
 
     /**
@@ -79,6 +75,11 @@ class Events
                 break;
             case 'bind':
                 Gateway::bindUid($client_id, $mData['fromid']);
+                Gateway::sendToAll(json_encode([
+                    'type' => 'login',
+                    'id' => $client_id,
+                    'data' => Gateway::getUidByClientId($client_id) . '进入'
+                ]));
                 break;
         }
     }

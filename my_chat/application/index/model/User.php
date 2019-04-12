@@ -1,6 +1,7 @@
 <?php
 
 namespace app\index\model;
+
 use think\Model;
 
 /**
@@ -15,5 +16,11 @@ class User extends Model
     {
         $a = $this->select();
         return $a;
+    }
+
+    public function getInfoById($id)
+    {
+        $where = ['id' => $id];
+        return $this->where($where)->find();
     }
 }
